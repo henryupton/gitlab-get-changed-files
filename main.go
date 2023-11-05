@@ -31,11 +31,12 @@ type Output struct {
 func main() {
 	var sourceBranch string
 	var targetBranch string
-	var isStraight = true
+	var isStraight bool
 	var projectId int
 
 	flag.StringVar(&sourceBranch, "source-branch", "", "Branch on which the changes exist.")
 	flag.StringVar(&targetBranch, "target-branch", "", "Branch with which to compare.")
+	flag.BoolVar(&isStraight, "straight", false, "Git comparison type, false for 'three dots comparison'.")
 	flag.IntVar(&projectId, "project-id", 0, "Project in which the branches reside.")
 
 	flag.Parse()
@@ -115,7 +116,6 @@ func main() {
 
 		oldFileExtension := filepath.Ext(d.OldPath)
 		newFileExtension := filepath.Ext(d.NewPath)
-
 		if oldFileExtension != newFileExtension {
 			typeChangedFiles = append(typeChangedFiles, d.NewPath)
 		}
